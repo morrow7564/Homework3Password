@@ -1,85 +1,78 @@
 // var taken in from HTML page
+var bigEl = document.getElementById('big');
+var littleEl = document.getElementById('little');
+var digitsEl = document.getElementById('digits');
+var objectsEl = document.getElementById('objects');
 var resultEl = document.getElementById('result');
-var lengthEl = document.getElementById('length');
-var uppercaseEl = document.getElementById('uppercase');
-var lowercaseEl = document.getElementById('lowercase');
-var numbersEl = document.getElementById('numbers');
-var symbolsEl = document.getElementById('symbols');
+var limithEl = document.getElementById('limit');
 var generateEl = document.getElementById('generate');
 
 // var that adds that adds the function together from letters, numbers and symbols
-var randomFunc = {
-	lower: getRandomLower,
-	upper: getRandomUpper,
-	number: getRandomNumber,
-	symbol: getRandomSymbol
+var checkboxes = {
+	big: getRandomBig,
+	little: getRandomLittle,
+	digits: getRandomDigits,
+	objects: getRandomObjects,
 }
 
 // functions for the Letters, Numbers and symbols
-function getRandomLower() {
-	return String.fromCharCode(Math.floor(Math.random() * 26) + 97);
-}
-
-function getRandomUpper() {
+function getRandomBig() {
 	return String.fromCharCode(Math.floor(Math.random() * 26) + 65);
-}
+} 
+// console.log(getRandomBig())
 
-function getRandomNumber() {
+function getRandomLittle() {
+	return String.fromCharCode(Math.floor(Math.random() * 26) + 97);
+} 
+// console.log(getRandomLittle())
+
+function getRandomDigits() {
 	return +String.fromCharCode(Math.floor(Math.random() * 10) + 48);
-}
+} 
+// console.log(getRandomDigits())
 
-function getRandomSymbol() {
+function getRandomObjects() {
   return String.fromCharCode(Math.floor(Math.random() * 11) + 33)
-}
-
+} 
+// console.log(getRandomObjects())
 
 // click listner function
 generate.addEventListener('click', () => {
-	var length = +lengthEl.value;
-	var hasLower = lowercaseEl.checked;
-	var hasUpper = uppercaseEl.checked;
-	var hasNumber = numbersEl.checked;
-	var hasSymbol = symbolsEl.checked;
+	var limit = +limithEl.value;
+	var hasBig = bigEl.checked;
+	var hasLittle = littleEl.checked;
+	var hasDigits = digitsEl.checked;
+	var hasObjects = objectsEl.checked;
 	
-	resultEl.innerText = generatePassword(hasLower, hasUpper, hasNumber, hasSymbol, length);
+	// console.log(hasBig, hasLittle, hasDigits, hasObjects)
+
+	resultEl.innerText = generatePassword(hasBig, hasLittle, hasDigits, hasObjects, limit);
 });
 
 // function for whats actully going to happen when you hit click
-function generatePassword(lower, upper, number, symbol, length) {
+function generatePassword(big, little, digits, objects, limit) {
 	var generatedPassword = '';
-	const typesCount = lower + upper + number + symbol;
-	const typesArr = [{lower}, {upper}, {number}, {symbol}].filter(item => Object.values(item)[0]);
+	var typesCount = big + little + digits + objects;
+	var typesArr = [{big}, {little}, {digits}, {objects}].filter(item => Object.values(item)[0]);
 	
+	// console.log('typesCount', typesCount)
+
 	//if nothing is checked then nothing will happen 
 	if(typesCount === 0) {
 		return '';
 	}
 	
 	// a loop so the the password can generate each type 
-	for(var i=0; i<length; i+=typesCount) {
+	for(var i=0; i<limit; i+=typesCount) {
 		typesArr.forEach(type => {
-			const funcName = Object.keys(type)[0];
-			generatedPassword += randomFunc[funcName]();
+			var htgawm = Object.keys(type)[0];
+			generatedPassword += checkboxes[htgawm]();
 		});
 	}
 	
-	var finalPassword = generatedPassword.slice(0, length);
+	var passwordResults = generatedPassword.slice(0, limit);
 	
-	return finalPassword;
+	return passwordResults;
 }
-
-clipboard.addEventListener('click', () => {
-	const textarea = document.createElement('textarea');
-	const password = resultEl.innerText;
-	
-	if(!password) { return; }
-	
-	textarea.value = password;
-	document.body.appendChild(textarea);
-	textarea.select();
-	document.execCommand('copy');
-	textarea.remove();
-	alert('Password copied to clipboard');
-});
 
 
