@@ -26,8 +26,13 @@
           <br>
       <div>
             <label>Password length</label>
-            <input type="number" id="limit" min='8' max='128' value='10' />
-          </div>
+            <form>
+              <input id="limit"  type="range" name="amountRange" min="8" max="128" value="0" oninput="this.form.amountInput.value=this.value" />
+              <input id="limit"  type="number" name="amountInput" min="8" max="128" value="0" oninput="this.form.amountRange.value=this.value" />
+            </form>
+
+            <!-- <input type="number" id="limit" min='8' max='128' value='10' />
+          </div> -->
           <div>
             <label>Uppercase</label> 
             <input type="checkbox" id="big"/>

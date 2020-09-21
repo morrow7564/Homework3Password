@@ -74,5 +74,3 @@ function generatePassword(big, little, digits, objects, limit) {
 	
 	return passwordResults;
 }
-
-
