@@ -98,6 +98,7 @@ button[disabled] {
 }
 
 .password {
+  word-wrap: inherit;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
